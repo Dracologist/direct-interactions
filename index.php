@@ -12,8 +12,10 @@
             if ($_SESSION['logged-in'] != TRUE) {
                 $f3->reroute("/login");
             }
-            echo Template::instance()->render('html/head.html');
-            echo Template::instance()->render('html/home.html');
+            else {
+                echo Template::instance()->render('html/head.html');
+                echo Template::instance()->render('html/home.html');
+            }
         }
         );
     $f3->route('GET /login', function($f3) {
