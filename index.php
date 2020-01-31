@@ -9,7 +9,7 @@
             f3->set('title', "Home");
             echo Template::instance()->render('html/head.html');
             echo Template::instance()->render('html/test-home.html');
-        });
+    });
     $f3->route('GET /login', function($f3) {
         f3->set('title', "Log In");
         echo Template::instance()->render('html/head.html');
