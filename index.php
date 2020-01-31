@@ -5,7 +5,6 @@
     error_reporting(E_ALL);
     require_once('vendor/autoload.php');
     $f3 = Base::instance();
-    //please work
     $f3->route('GET|POST /',
         function($f3) {
             f3->set('title', "Home");
@@ -17,7 +16,7 @@
                 $f3->reroute("/login");
             }
         }
-        );
+    );
     $f3->route('GET /login', function($f3) {
         f3->set('title', "Log In");
         echo Template::instance()->render('html/head.html');
