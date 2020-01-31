@@ -4,8 +4,8 @@
     $f3->route('GET /',
         function($f3) {
             $f3->set('name','world');
-            echo Template::instance()->render('htlm/head.html');
-            echo Template::instance()->render('htlm/test-home.html');
+            echo Template::instance()->render('html/head.html');
+            echo Template::instance()->render('html/test-home.html');
         }
         );
     $f3->run();
