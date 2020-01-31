@@ -6,10 +6,10 @@
     $f3->route('GET|POST /',
         function($f3) {
             f3->set('title', "Home");
-            echo Template::instance()->render('html/head.html');
             if ($_SESSION['logged-in'] != TRUE) {
                 $f3->reroute("/login");
             }
+            echo Template::instance()->render('html/head.html');
             echo Template::instance()->render('html/home.html');
         }
         );
