@@ -4,6 +4,10 @@
     <body>
 		<div class="container">
 			<p class="h1">Home Page</p>
+			<check if="{{ @SESSION['admin']==TRUE }}">
+			    <true><p class="h3">You're an admin</p></true>
+			    <false><p class="h3">You're not an admin</p></false>
+			</check>
 		</div>
 	</body>
 </html>
