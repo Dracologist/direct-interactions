@@ -30,13 +30,5 @@
             echo Template::instance()->render('html/login.html');
         }
     });
-    $f3->route('POST /login', function($f3) {
-        
-        
-    });
-    $f3->route('GET|POST /home', function($f3) {
-        echo Template::instance()->render('html/head.html');
-        echo Template::instance()->render('html/home.html');
-    });
     $f3->run();
 ?>
