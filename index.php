@@ -29,7 +29,6 @@
             $f3->reroute("/");
         }
         else{
-            echo Template::instance()->render('html/head.html');
             echo Template::instance()->render('html/login.html');
         }
     });
