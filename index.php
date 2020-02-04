@@ -5,17 +5,34 @@
     error_reporting(E_ALL);
     require_once('vendor/autoload.php');
     $f3 = Base::instance();
-    $f3->route('GET /', function($f3) {
+    $f3->route('GET|POST /', function($f3) {
+        if($_SESSION['logged-in'] == TRUE){
             echo Template::instance()->render('html/head.html');
-            echo Template::instance()->render('html/test-home.html');
+            echo Template::instance()->render('html/home.html');
+        }
+        else {
+            $f3->reroute("/login");
+        }
     });
-    $f3->route('GET /login', function($f3) {
-        echo Template::instance()->render('html/head.html');
-        echo Template::instance()->render('html/login.html');
+    $f3->route('GET|POST /login', function($f3) {
+        if($_POST['username'] == "admin" && $_POST['password'] == "password"){
+            $_SESSION['logged-in'] = TRUE;
+            $_SESSION['admin'] = TRUE;
+            $f3->reroute("/");
+        }
+        elseif ($_POST['username'] == "user" && $_POST['password'] == "password")
+        {
+            $_SESSION['logged-in'] = TRUE;
+            $f3->reroute("/");
+        }
+        else{
+            echo Template::instance()->render('html/head.html');
+            echo Template::instance()->render('html/login.html');
+        }
     });
     $f3->route('POST /login', function($f3) {
-        $_SESSION['logged-in'] = TRUE;
-        $f3->reroute("/home");
+        
+        
     });
     $f3->route('GET|POST /home', function($f3) {
         echo Template::instance()->render('html/head.html');
