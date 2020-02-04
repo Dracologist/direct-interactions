@@ -5,9 +5,12 @@
     error_reporting(E_ALL);
     require_once('vendor/autoload.php');
     $f3 = Base::instance();
+    $f3->set('ONERROR',
+        function($f3) {
+            echo $f3->get('ERROR.text');
+    });
     $f3->route('GET|POST /', function($f3) {
         if($_SESSION['logged-in'] == TRUE){
-            echo Template::instance()->render('html/head.html');
             echo Template::instance()->render('html/home.html');
         }
         else {
@@ -30,5 +33,10 @@
             echo Template::instance()->render('html/login.html');
         }
     });
+        $f3->route('GET|POST /logout', function($f3) {
+            $_SESSION['logged-in'] = FALSE;
+            $_SESSION['admin'] = FALSE;
+            $f3->reroute("/");
+        });
     $f3->run();
 ?>
