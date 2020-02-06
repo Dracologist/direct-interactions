@@ -4,6 +4,7 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
     require_once('vendor/autoload.php');
+    require('database-setup.php');
     $f3 = Base::instance();
     $f3->set('ONERROR',
         function($f3) {
@@ -32,10 +33,13 @@
             echo Template::instance()->render('html/login.html');
         }
     });
-        $f3->route('GET|POST /logout', function($f3) {
-            $_SESSION['logged-in'] = FALSE;
-            $_SESSION['admin'] = FALSE;
-            $f3->reroute("/");
+    $f3->route('GET|POST /logout', function($f3) {
+        $_SESSION['logged-in'] = FALSE;
+        $_SESSION['admin'] = FALSE;
+        $f3->reroute("/");
+    });
+        $f3->route('GET|POST /signup', function($f3) {
+            echo Template::instance()->render('html/signup.html');
         });
     $f3->run();
 ?>
