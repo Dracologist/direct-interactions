@@ -6,14 +6,14 @@
 			<h1>Log In</h1>
 			<form action="" method="post">
 				<div class="formgroup">
-					<check if {{@email_error}}>
+					<check if="{{ @email_error }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
 								Please enter a valid email
 							</div>
 						</true>
 					</check>
-					<check if {{@unique_email_error}}>
+					<check if="{{ @unique_email_error }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
 								There is already an account registered with this email
@@ -23,8 +23,9 @@
 					<label for="email-signup">Email Address: </label>
 					<input type="email" name="email" id="email-signup" class="form-control" alt="Type email address here" tabindex="1">
 				</div>
+				
 				<div class="formgroup">
-					<check if {{@fname_error}}>
+					<check if="{{ @fname_error }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
 								Please enter a first name
@@ -34,8 +35,9 @@
 					<label for="fname">First Name: </label>
 					<input type="text" name="fname" id="fname" class="form-control" alt="Type first name here" tabindex="1">
 				</div>
+				
 				<div class="formgroup">
-					<check if {{@lname_error}}>
+					<check if="{{ @lname_error }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
 								Please enter a last name
@@ -45,12 +47,14 @@
 					<label for="lname">Last Name: </label>
 					<input type="text" name="lname" id="lname" class="form-control" alt="Type last name here" tabindex="1">
 				</div>
+				
 				<div class="formgroup">
 					<label for="admin">I am an Admin </label>
 					<input type="checkbox" name="admin" id="admin" class="admin" alt="Check this box if you're an admin" tabindex="1">
 				</div>
+				
 				<div class="formgroup">
-					<check if {{@password_error}}>
+					<check if="{{ @password_error }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
 								Please enter a password
@@ -60,17 +64,19 @@
 					<label for="password-signup">Password: </label>
 					<input type="password" name="password" id="password-signup" class="form-control" alt="Type password here" tabindex="1">
 				</div>
-					<check if {{@retype_password_error}}>
+		
+				<div class="formgroup">
+					<check if="{{ @retype_password_error }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
 								Passwords must match
 							</div>
 						</true>
 					</check>
-				<div class="formgroup">
 					<label for="retype-password">Retype Password: </label>
 					<input type="password" name="retype-password" id="retype-password" class="form-control" alt="Retype password here" tabindex="1">
 				</div>
+				
 				<div class="formgroup">
 					<input type="submit" name="submit" class="btn btn-primary form-control" alt="Click here to sign up" value="Sign Up">
 				</div>

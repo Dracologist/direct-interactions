@@ -6,14 +6,14 @@
 			<h1>Log In</h1>
 			<form action="" method="post">
 				<div class="formgroup">
-					<check if {{@no_email}}>
+					<check if="{{ @no_email }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
 								Please enter your email address
 							</div>
 						</true>
 					</check>
-					<check if {{@wrong_email}}>
+					<check if="{{ @wrong_email }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
 								There is no account registered to that email address
@@ -24,14 +24,14 @@
 					<input type="text" name="email" id="email" class="form-control" alt="Type email address here" tabindex="1">
 				</div>
 				<div class="formgroup">
-					<check if {{@no_password}}>
+					<check if="{{ @no_password }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
 								Please enter your password
 							</div>
 						</true>
 					</check>
-					<check if {{@wrong_email}}>
+					<check if="{{ @wrong_email }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
 								Password is incorrect

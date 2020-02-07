@@ -46,7 +46,7 @@
                 $error = true;
             }
             if(!$error){
-                $_SESSION['logged-in'] = login($_POST['email'], $_POST['password']) 
+                $_SESSION['logged-in'] = login($_POST['email'], $_POST['password'])
                 //TODO Disable test credentials by deleting next line
                 || (($_POST['email'] == "user" || $_POST['email'] == "admin") && $_POST['password'] == "password");
                 
