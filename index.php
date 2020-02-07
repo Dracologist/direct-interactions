@@ -61,7 +61,6 @@
                     else {
                         $f3->set('wrong_password', true);
                     }
-                    echo Template::instance()->render('html/login.html');
                 }
                 else{
                     $f3->reroute("/");
