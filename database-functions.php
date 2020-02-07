@@ -27,7 +27,8 @@ function signup($fname, $lname, $email, $password, $admin) {
     $link = connect();
     $stmt = $link->prepare("INSERT INTO employees (firstname, lastname, email, password, admin) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssi", $fname, $lname, $email, $password, $admin);
-    if($stmt->execute()){
+    $success = $stmt->execute();
+    if($success){
         echo '<script> console.log("employees added successfully"); </script>';
     }
     else {
@@ -35,6 +36,7 @@ function signup($fname, $lname, $email, $password, $admin) {
     }
     $stmt->close();
     $link->close();
+    return $success();
 }
 function emailTaken($email){
     $link = connect();
