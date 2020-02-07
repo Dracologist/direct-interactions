@@ -37,7 +37,7 @@ function signup($fname, $lname, $email, $password, $admin) {
 function emailTaken($email){
     $pdo = connect();
     $stmt = $pdo->prepare("SELECT * FROM employees WHERE email = ?");
-    $stmt->bind_param("s", $email, PDO::PARAM_STR);
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
