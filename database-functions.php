@@ -1,6 +1,5 @@
 <?php
 function setup() {
-    connect();
     makeEmployeeTable();
 }
 function connect(){
@@ -31,11 +30,11 @@ function makeEmployeeTable() {
 function signup($fname, $lname, $email, $password, $admin) {
     $pdo = connect();
     $stmt = $pdo->prepare("INSERT INTO employees (firstname, lastname, email, password, admin) VALUES (:fn, :ln, :em, :pw, :ad)");
-    $fn= &$fname;
-    $ln= &$lname;
-    $em= &$email;
-    $pw= &$password;
-    $ad= &$admin;
+    $fn= $fname;
+    $ln= $lname;
+    $em= $email;
+    $pw= $password;
+    $ad= $admin;
     $stmt->bind_param(":fn", $fn, PDO::PARAM_STR);
     $stmt->bind_param(":ln", $ln, PDO::PARAM_STR);
     $stmt->bind_param(":em", $em, PDO::PARAM_STR);
@@ -47,16 +46,16 @@ function signup($fname, $lname, $email, $password, $admin) {
 function emailTaken($email){
     $pdo = connect();
     $stmt = $pdo->prepare("SELECT * FROM employees WHERE email = :em");
-    $em= &$email;
-    $stmt->bind_param(":em", $email, PDO::PARAM_STR);
+    $em= $email;
+    $stmt->bind_param(":em", $em, PDO::PARAM_STR);
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
 function login($email, $password){
     $pdo = connect();
     $stmt = $pdo->prepare("SELECT * FROM employees WHERE email = :em AND password = :pw");
-    $em= &$email;
-    $pw= &$password;
+    $em= $email;
+    $pw= $password;
     $stmt->bind_param(":em", $em, PDO::PARAM_STR);
     $stmt->bind_param(":pw", $pw, PDO::PARAM_STR);
     $stmt->execute();
@@ -65,8 +64,8 @@ function login($email, $password){
 function admin($email, $password) {
     $pdo = connect();
     $stmt = $pdo->prepare("SELECT * FROM employees WHERE email = :em AND password = :pw AND admin");
-    $em= &$email;
-    $pw= &$password;
+    $em= $email;
+    $pw= $password;
     $stmt->bind_param(":em", $em, PDO::PARAM_STR);
     $stmt->bind_param(":pw", $pw, PDO::PARAM_STR);
     $stmt->execute();
