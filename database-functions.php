@@ -8,21 +8,31 @@ function connect(){
 }
 function makeEmployeeTable() {
     $link = connect();
-    $create_employee_table = "CREATE TABLE IF NOT EXISTS employees (".
-    "employeeID int AUTO_INCREMENT NOT NULL PRIMARY KEY,".
-    "firstname VARCHAR(50),".
-    "lastname VARCHAR(50),".
-    "email VARCHAR(50),".
-    "password VARCHAR(50),".
-    "admin BOOLEAN);";
-    $link->query($create_employee_table);
+    $create_employee_table = "CREATE TABLE IF NOT EXISTS employees ( 
+    employeeID INT(255) AUTO_INCREMENT NOT NULL PRIMARY KEY, 
+    firstname VARCHAR(50), 
+    lastname VARCHAR(50), 
+    email VARCHAR(50), 
+    password VARCHAR(50), 
+    admin BOOLEAN );";
+    if($link->query($create_employee_table)){
+        echo '<script> console.log("employees table created"); </script>';
+    }
+    else {
+        echo '<script> console.log("failed to create employees table); </script>';
+    }
     $link->close();
 }
 function signup($fname, $lname, $email, $password, $admin) {
     $link = connect();
     $stmt = $link->prepare("INSERT INTO employees (firstname, lastname, email, password, admin) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssi", $fname, $lname, $email, $password, $admin);
-    $stmt->execute();
+    if($stmt->execute()){
+        echo '<script> console.log("employees added successfully"); </script>';
+    }
+    else {
+        echo '<script> console.log("failed to add employee"); </script>';
+    }
     $stmt->close();
     $link->close();
 }

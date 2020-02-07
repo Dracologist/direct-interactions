@@ -53,21 +53,18 @@
                 $_SESSION['admin'] = admin($_POST['email'], sha1($_POST['password'])) 
                 //TODO Disable test credentials by deleting next line
                 || ($_SESSION['logged-in'] && $_POST['email'] == "admin");
-                
-                if(!$_SESSION['logged-in']){
-                    if(!emailTaken($_POST['email'])){
-                        $f3->set('wrong_email', true);
-                    }
-                    else {
-                        $f3->set('wrong_password', true);
-                    }
-                }
-                else{
-                    $f3->reroute("/");
-                }
             }
             if(!$_SESSION['logged-in']){
+                if(!emailTaken($_POST['email'])){
+                    $f3->set('wrong_email', true);
+                }
+                else {
+                    $f3->set('wrong_password', true);
+                }
                 echo Template::instance()->render('html/login.html');
+            }
+            else{
+                $f3->reroute("/");
             }
         });
     $f3->route('GET|POST /logout', function($f3) {
