@@ -36,7 +36,7 @@ function signup($fname, $lname, $email, $password, $admin) {
     }
     $stmt->close();
     $link->close();
-    return $success();
+    return $success;
 }
 function emailTaken($email){
     $link = connect();
