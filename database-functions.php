@@ -15,6 +15,7 @@ function makeEmployeeTable() {
     "email VARCHAR(50),".
     "password VARCHAR(50),".
     "admin BOOLEAN);";
+    $link->query($create_employee_table);
     $link->close();
 }
 function signup($fname, $lname, $email, $password, $admin) {
