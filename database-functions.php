@@ -4,6 +4,10 @@ function setup() {
 }
 function connect(){
     $link = new mysqli($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
+    if (!$link) {
+        echo '<script> console.log("Connection Failed: ' . mysqli_connect_error() . '"); </script>';
+        die("Connection failed: " . mysqli_connect_error());
+    }
     return $link;
 }
 function makeEmployeeTable() {
@@ -24,6 +28,7 @@ function makeEmployeeTable() {
     $link->close();
 }
 function signup($fname, $lname, $email, $password, $admin) {
+    $success = false;
     $link = connect();
     $stmt = $link->prepare("INSERT INTO employees (firstname, lastname, email, password, admin) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssi", $fname, $lname, $email, $password, $admin);
