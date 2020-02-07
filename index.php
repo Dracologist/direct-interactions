@@ -20,8 +20,10 @@
         }
     });
     $f3->route('GET /login', function($f3) {
-        $f3->set('no-email', false);
-        $f3->set('no-password', false);
+        $f3->set('no_email', false);
+        $f3->set('no_password', false);
+        $f3->set('wrong_email', false);
+        $f3->set('wrong_password', false);
         if($_SESSION['logged-in'] == true){
             $f3->reroute("/");
         }
@@ -31,18 +33,19 @@
     });
         $f3->route('POST /login', function($f3) {
             $error = false;
-            $f3->set('no-email', false);
-            $f3->set('no-password', false);
+            $f3->set('no_email', false);
+            $f3->set('no_password', false);
+            $f3->set('wrong_email', false);
+            $f3->set('wrong_password', false);
             if(!isset($_POST['email'])){
-                $f3->set('no-email', true);
+                $f3->set('no_email', true);
                 $error = true;
             }
             if(!isset($_POST['password'])){
-                $f3->set('no-password', true);
+                $f3->set('no_password', true);
                 $error = true;
             }
             if(!$error){
-                
                 $_SESSION['logged-in'] = login($_POST['email'], $_POST['password']) 
                 //TODO Disable test credentials by deleting next line
                 || (($_POST['email'] == "user" || $_POST['email'] == "admin") && $_POST['password'] == "password");
@@ -51,6 +54,18 @@
                 //TODO Disable test credentials by deleting next line
                 || ($_SESSION['logged-in'] && $_POST['email'] == "admin");
                 
+                if(!$_SESSION['logged-in']){
+                    if(!emailTaken($_POST['email'])){
+                        $f3->set('wrong_email', true);
+                    }
+                    else {
+                        $f3->set('wrong_password', true);
+                    }
+                    echo Template::instance()->render('html/login.html');
+                }
+                else{
+                    $f3->reroute("/");
+                }
             }
             if(!$_SESSION['logged-in']){
                 echo Template::instance()->render('html/login.html');
@@ -61,43 +76,49 @@
         $f3->reroute("/");
     });
     $f3->route('GET /signup', function($f3) {
+        $f3->set('email_error', false);
+        $f3->set('fname_error', false);
+        $f3->set('lname_error', false);
+        $f3->set('password_error', false);
+        $f3->set('retype_password_error', false);
+        $f3->set('unique_email_error', false);
         echo Template::instance()->render('html/signup.html');
     });
     $f3->route('POST /signup', function($f3, $pdo) {
         $error = false;
-        $f3->set('email-error', false);
-        $f3->set('fname-error', false);
-        $f3->set('lname-error', false);
-        $f3->set('password-error', false);
-        $f3->set('retype-password-error', false);
-        $f3->set('unique-email-error', false);
+        $f3->set('email_error', false);
+        $f3->set('fname_error', false);
+        $f3->set('lname_error', false);
+        $f3->set('password_error', false);
+        $f3->set('retype_password_error', false);
+        $f3->set('unique_email_error', false);
         //email validation
-        if(!isset($_POST['email'])){
-            $f3->set('email-error', true);
+        if(!isset($_POST['email']) || strlen($_POST['email']) < 1){
+            $f3->set('email_error', true);
             $error = true;
         }
         elseif (emailTaken($_POST['email'])){
-            $f3->set('unique-email-error', true);
+            $f3->set('unique_email_error', true);
             $error = true;
         }
         //first name validation
-        if(!isset($_POST['fname'])){
-            $f3->set('fname-error', true);
+        if(!isset($_POST['fname']) || strlen($_POST['fname']) < 1){
+            $f3->set('fname_error', true);
             $error = true;
         }
         //last name validation
-        if(!isset($_POST['lname'])){
-            $f3->set('lname-error', true);
+        if(!isset($_POST['lname'])  || strlen($_POST['lname']) < 1){
+            $f3->set('lname_error', true);
             $error = true;
         }
         //password validation
-        if(!isset($_POST['password'])){
-            $f3->set('password-error', true);
+        if(!isset($_POST['password']) || strlen($_POST['password']) < 1){
+            $f3->set('password_error', true);
             $error = true;
         }
         //password retype validation
         if($_POST['retype-password'] != $_POST['password']){
-            $f3->set('retype-password-error', true);
+            $f3->set('retype_password_error', true);
             $error = true;
         }
         //if there's an error, show the signup sheet again

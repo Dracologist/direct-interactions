@@ -6,10 +6,38 @@
 			<h1>Log In</h1>
 			<form action="" method="post">
 				<div class="formgroup">
+					<check if {{@no_email}}>
+						<true>
+							<div class="alert alert-danger" role="alert">
+								Please enter your email address
+							</div>
+						</true>
+					</check>
+					<check if {{@wrong_email}}>
+						<true>
+							<div class="alert alert-danger" role="alert">
+								There is no account registered to that email address
+							</div>
+						</true>
+					</check>
 					<label for="email">Email Address: </label>
 					<input type="text" name="email" id="email" class="form-control" alt="Type email address here" tabindex="1">
 				</div>
 				<div class="formgroup">
+					<check if {{@no_password}}>
+						<true>
+							<div class="alert alert-danger" role="alert">
+								Please enter your password
+							</div>
+						</true>
+					</check>
+					<check if {{@wrong_email}}>
+						<true>
+							<div class="alert alert-danger" role="alert">
+								Password is incorrect
+							</div>
+						</true>
+					</check>
 					<label for="password">Password: </label>
 					<input type="password" name="password" id="password" class="form-control" alt="Type password here" tabindex="1">
 				</div>
