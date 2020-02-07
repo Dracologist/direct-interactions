@@ -30,28 +30,38 @@ function makeEmployeeTable() {
 function signup($fname, $lname, $email, $password, $admin) {
     $pdo = connect();
     $stmt = $pdo->prepare("INSERT INTO employees (firstname, lastname, email, password, admin) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssi", $fname, $lname, $email, $password, $admin);
+    $stmt->bind_param("ssssi", $fn, $ln, $em, $pw, $ad);
+    $fn = $fname;
+    $ln = $lname;
+    $em = $email;
+    $pw = $password;
+    $ad = $admin;
     $stmt->execute();
     $stmt->close();
 }
 function emailTaken($email){
     $pdo = connect();
     $stmt = $pdo->prepare("SELECT * FROM employees WHERE email = ?");
-    $stmt->bind_param("s", $email);
+    $stmt->bind_param("s", $em);
+    $em = $email;
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
 function login($email, $password){
     $pdo = connect();
     $stmt = $pdo->prepare("SELECT * FROM employees WHERE email = ? AND password = ?");
-    $stmt->bind_param("ss", $email, $password);
+    $stmt->bind_param("ss", $em, $pw);
+    $em = $email;
+    $pw = $password;
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
 function admin($email, $password) {
     $pdo = connect();
     $stmt = $pdo->prepare("SELECT * FROM employees WHERE email = ? AND password = ? AND admin");
-    $stmt->bind_param("ss", $email, $password);
+    $stmt->bind_param("ss", $em, $pw);
+    $em = $email;
+    $pw = $password;
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
