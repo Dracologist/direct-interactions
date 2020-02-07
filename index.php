@@ -46,11 +46,11 @@
                 $error = true;
             }
             if(!$error){
-                $_SESSION['logged-in'] = login($_POST['email'], $_POST['password'])
+                $_SESSION['logged-in'] = login($_POST['email'], sha1($_POST['password']))
                 //TODO Disable test credentials by deleting next line
                 || (($_POST['email'] == "user" || $_POST['email'] == "admin") && $_POST['password'] == "password");
                 
-                $_SESSION['admin'] = admin($_POST['email'], $_POST['password']) 
+                $_SESSION['admin'] = admin($_POST['email'], sha1($_POST['password'])) 
                 //TODO Disable test credentials by deleting next line
                 || ($_SESSION['logged-in'] && $_POST['email'] == "admin");
                 
