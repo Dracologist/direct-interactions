@@ -6,6 +6,9 @@
 			<h1>Log In</h1>
 			<form action="" method="post">
 				<div class="formgroup">
+					<label for="email">Email Address: </label>
+					<input type="text" name="email" id="email" class="form-control" alt="Type email address here" tabindex="1">
+					
 					<check if="{{ @no_email }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
@@ -20,10 +23,11 @@
 							</div>
 						</true>
 					</check>
-					<label for="email">Email Address: </label>
-					<input type="text" name="email" id="email" class="form-control" alt="Type email address here" tabindex="1">
 				</div>
+				
 				<div class="formgroup">
+					<label for="password">Password: </label>
+					<input type="password" name="password" id="password" class="form-control" alt="Type password here" tabindex="1">
 					<check if="{{ @no_password }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
@@ -31,17 +35,18 @@
 							</div>
 						</true>
 					</check>
-					<check if="{{ @wrong_email }}">
+					<check if="{{ @wrong_password }}">
 						<true>
 							<div class="alert alert-danger" role="alert">
 								Password is incorrect
 							</div>
 						</true>
 					</check>
-					<label for="password">Password: </label>
-					<input type="password" name="password" id="password" class="form-control" alt="Type password here" tabindex="1">
 				</div>
-				<input type="submit" name="submit" class="btn btn-primary" alt="Click here to log in" value="Log In">
+				
+				<div class="formgroup">
+					<input type="submit" name="submit" class="btn btn-primary form-control" alt="Click here to sign up" value="Log In">
+				</div>
 			</form>
 			<a href="signup">Don't have an account? Sign up here!</a>
 		</div>
