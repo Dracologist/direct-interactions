@@ -29,7 +29,8 @@ function signup($fname, $lname, $email, $password, $admin) {
     $stmt->bind_param("ssssi", $fname, $lname, $email, $password, $admin);
     $success = $stmt->execute();
     if($success){
-        echo '<script> console.log("employees added successfully"); </script>';
+        echo '<script> console.log("successfully added employee \nFirst Name: ' . $fname 
+        . '\nLast Name: ' . $lname . '\nEmail: ' . $email . '\nPassword: ' . $password . '"); </script>';
     }
     else {
         echo '<script> console.log("failed to add employee"); </script>';
