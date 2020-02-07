@@ -48,7 +48,7 @@ function emailTaken($email){
     $pdo = connect();
     $stmt = $pdo->prepare("SELECT * FROM employees WHERE email = :em");
     $em= &$email;
-    $stmt->bind_param(":em", $em, PDO::PARAM_STR);
+    $stmt->bind_param(":em", $email, PDO::PARAM_STR);
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
