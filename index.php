@@ -5,10 +5,7 @@
     error_reporting(E_ALL);
     require_once('vendor/autoload.php');
     require('database-functions.php');
-    if($_SESSION['set-up'] != true){
-        setup();
-        $_SESSION['set-up'] = true;
-    }
+    setup();
     $f3 = Base::instance();
     $f3->set('ONERROR',
         function($f3) {
