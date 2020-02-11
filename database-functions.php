@@ -57,10 +57,13 @@ function emailTaken($email){
     }
     $stmt = $link->prepare("SELECT * FROM employees WHERE email = ?");
     $stmt->bind_param("s", $email);
+    $stmt->execute();
     $result = $stmt->get_result();
+    $row = $result->fetch_row();
+    $result->close();
     $stmt->close();
     $link->close();
-    return $result->num_rows > 0;
+    return $row != NULL;
 }
 function login($email, $password){
     $link = new mysqli($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
@@ -70,10 +73,13 @@ function login($email, $password){
     }
     $stmt = $link->prepare("SELECT * FROM employees WHERE email = ? AND password = ?");
     $stmt->bind_param("ss", $email, $password);
+    $stmt->execute();
     $result = $stmt->get_result();
+    $row = $result->fetch_row();
+    $result->close();
     $stmt->close();
     $link->close();
-    return $result->num_rows > 0;
+    return $row != NULL;
 }
 function admin($email, $password) {
     $link = new mysqli($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
@@ -83,10 +89,13 @@ function admin($email, $password) {
     }
     $stmt = $link->prepare("SELECT * FROM employees WHERE email = ? AND password = ? AND admin");
     $stmt->bind_param("ss", $email, $password);
+    $stmt->execute();
     $result = $stmt->get_result();
+    $row = $result->fetch_row();
+    $result->close();
     $stmt->close();
     $link->close();
-    return $result->num_rows > 0;
+    return $row != NULL;
 }
 
 //TODO Delete this function when testing is over
