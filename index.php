@@ -71,6 +71,11 @@
         session_destroy();
         $f3->reroute("/");
     });
+    //TODO Remove this route once testing is done
+    $f3->route('GET|POST /clear-tables', function($f3) {
+        clearTables();
+        $f3->reroute("/");
+    });
     $f3->route('GET /signup', function($f3) {
         $f3->set('email_error', false);
         $f3->set('fname_error', false);

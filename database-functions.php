@@ -16,7 +16,7 @@ function makeEmployeeTable() {
     email VARCHAR(50), 
     password VARCHAR(50), 
     verified BOOLEAN,
-    admin BOOLEAN );";
+    admin BOOLEAN )";
     if($link->query($create_employee_table)){
         echo '<script> console.log("employees table created"); </script>';
     }
@@ -32,18 +32,20 @@ function signup($fname, $lname, $email, $password, $admin) {
         echo '<script> console.log("Connection Failed: ' . mysqli_connect_error() . '"); </script>';
         die("Connection failed: " . mysqli_connect_error());
     }
-    $stmt = $link->prepare("INSERT INTO employees (firstname, lastname, email, password, admin) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssi", $fname, $lname, $email, $password, $admin);
-    $success = $stmt->execute();
-    if($success){
-        echo '<script> console.log("successfully added employee \nFirst Name: ' . $fname 
-        . '\nLast Name: ' . $lname . '\nEmail: ' . $email . '\nPassword: ' . $password . '"); </script>';
+    else{
+        $stmt = $link->prepare("INSERT INTO employees (firstname, lastname, email, password, admin) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssi", $fname, $lname, $email, $password, $admin);
+        $success = $stmt->execute();
+        if($success){
+            echo '<script> console.log("successfully added employee \nFirst Name: ' . $fname 
+            . '\nLast Name: ' . $lname . '\nEmail: ' . $email . '\nPassword: ' . $password . '"); </script>';
+        }
+        else {
+            echo '<script> console.log("failed to add employee"); </script>';
+        }
+        $stmt->close();
+        $link->close();
     }
-    else {
-        echo '<script> console.log("failed to add employee"); </script>';
-    }
-    $stmt->close();
-    $link->close();
     return $success;
 }
 function emailTaken($email){
@@ -84,4 +86,22 @@ function admin($email, $password) {
     $stmt->close();
     $link->close();
     return $result->num_rows > 0;
+}
+
+//TODO Delete this function when testing is over
+function clearTables(){
+    $link = new mysqli($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
+    if (!$link) {
+        echo '<script> console.log("Connection Failed: ' . mysqli_connect_error() . '"); </script>';
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $drop_employee_table = "DROP TABLE IF EXISTS employees";
+    if($link->query($drop_employee_table)){
+        echo '<script> console.log("employees table created"); </script>';
+    }
+    else {
+        echo '<script> console.log("failed to create employees table); </script>';
+    }
+    $link->close();
+    makeEmployeeTable();
 }
