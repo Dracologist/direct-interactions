@@ -93,7 +93,7 @@ function admin($email, $password) {
         echo '<script> console.log("Connection Failed: ' . mysqli_connect_error() . '"); </script>';
         die("Connection failed: " . mysqli_connect_error());
     }
-    $stmt = $link->prepare("SELECT * FROM employees WHERE email = ? AND password = ? AND admin");
+    $stmt = $link->prepare("SELECT * FROM employees WHERE email = ? AND password = ? AND admin = 1");
     $stmt->bind_param("ss", $email, $password);
     $stmt->execute();
     $result = $stmt->get_result();
