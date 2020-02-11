@@ -15,6 +15,7 @@ function makeEmployeeTable() {
     lastname VARCHAR(50), 
     email VARCHAR(50), 
     password VARCHAR(50), 
+    verified BOOLEAN,
     admin BOOLEAN );";
     if($link->query($create_employee_table)){
         echo '<script> console.log("employees table created"); </script>';
