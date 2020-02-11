@@ -27,6 +27,8 @@ function makeEmployeeTable() {
 }
 function signup($fname, $lname, $email, $password, $admin) {
     $success = false;
+    echo '<script> console.log("\nFirst Name: ' . $fname
+    . '\nLast Name: ' . $lname . '\nEmail: ' . $email . '\nPassword: ' . $password . '"); </script>';
     $link = new mysqli($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
     if (!$link) {
         echo '<script> console.log("Connection Failed: ' . mysqli_connect_error() . '"); </script>';
@@ -37,8 +39,7 @@ function signup($fname, $lname, $email, $password, $admin) {
         $stmt->bind_param("ssssi", $fname, $lname, $email, $password, $admin);
         $success = $stmt->execute();
         if($success){
-            echo '<script> console.log("successfully added employee \nFirst Name: ' . $fname 
-            . '\nLast Name: ' . $lname . '\nEmail: ' . $email . '\nPassword: ' . $password . '"); </script>';
+            echo '<script> console.log("successfully added employee"); </script>';
         }
         else {
             echo '<script> console.log("failed to add employee"); </script>';
