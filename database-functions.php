@@ -36,6 +36,12 @@ function signup($fname, $lname, $email, $password, $admin) {
     }
     else{
         $stmt = $link->prepare("INSERT INTO employees (firstname, lastname, email, password, admin) VALUES (?, ?, ?, ?, ?)");
+        if($admin){
+            $admin = 1;
+        }
+        else{
+            $admin = 0;
+        }
         $stmt->bind_param("ssssi", $fname, $lname, $email, $password, $admin);
         $success = $stmt->execute();
         if($success){

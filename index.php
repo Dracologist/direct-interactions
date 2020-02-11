@@ -125,7 +125,7 @@
         //if there's an error, show the signup sheet again
         if(!$error){ 
             echo signup($_POST['fname'], $_POST['lname'], $_POST['email'], sha1($_POST['password']), $_POST['admin']);
-            echo "<a href='login'>Go to login page</a>";
+            $f3->reroute("/");
         }
         //otherwise, submit the user to the database and go to the home page
         else{
