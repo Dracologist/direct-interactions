@@ -1,6 +1,9 @@
 <?php
 function setup() {
     makeEmployeeTable();
+    makeShiftTable();
+    makeTeamEmployeeTable();
+    makeTeamShiftTable();
 }
 
 function makeEmployeeTable() {
@@ -25,6 +28,63 @@ function makeEmployeeTable() {
     }
     $link->close();
 }
+
+function makeShiftTable() {
+    $link = new mysqli($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
+    if (!$link) {
+        echo '<script> console.log("Connection Failed: ' . mysqli_connect_error() . '"); </script>';
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $create_shift_table = "CREATE TABLE IF NOT EXISTS shifts (
+    shiftID INT(255) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    time TIMESTAMP,
+    employee INT(255),
+    taken BOOLEAN )";
+    if($link->query($create_shift_table)){
+        echo '<script> console.log("shifts table created"); </script>';
+    }
+    else {
+        echo '<script> console.log("failed to create shifts table); </script>';
+    }
+    $link->close();
+}
+
+function makeTeamEmployeeTable() {
+    $link = new mysqli($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
+    if (!$link) {
+        echo '<script> console.log("Connection Failed: ' . mysqli_connect_error() . '"); </script>';
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $create_shift_table = "CREATE TABLE IF NOT EXISTS teamemployees (
+    teamName VARCHAR(150),
+    employeeID INT(255) NOT NULL FOREIGN KEY REFERENCES employees(employeeID) )";
+    if($link->query($create_shift_table)){
+        echo '<script> console.log("teamsemployees table created"); </script>';
+    }
+    else {
+        echo '<script> console.log("failed to create teamemployees table); </script>';
+    }
+    $link->close();
+}
+
+function makeTeamShiftTable() {
+    $link = new mysqli($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
+    if (!$link) {
+        echo '<script> console.log("Connection Failed: ' . mysqli_connect_error() . '"); </script>';
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $create_shift_table = "CREATE TABLE IF NOT EXISTS teamshifts (
+    teamName VARCHAR(150),
+    shiftID INT(255) NOT NULL FOREIGN KEY REFERENCES shifts(shiftID) )";
+    if($link->query($create_shift_table)){
+        echo '<script> console.log("teamshifts table created"); </script>';
+    }
+    else {
+        echo '<script> console.log("failed to create teamshifts table); </script>';
+    }
+    $link->close();
+}
+
 function signup($fname, $lname, $email, $password, $admin) {
     $success = false;
     $feedback = '<script> console.log("\nFirst Name: ' . $fname
