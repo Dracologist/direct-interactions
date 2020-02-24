@@ -95,7 +95,7 @@ function signup($fname, $lname, $email, $password, $admin) {
         die("Connection failed: " . mysqli_connect_error());
     }
     else{
-        $stmt = $link->prepare("INSERT INTO employees (firstname, lastname, email, password, admin) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $link->prepare("INSERT INTO employees (firstname, lastname, email, password, admin, verified) VALUES (?, ?, ?, ?, ?, 0)");
         if($admin){
             $admin = 1;
         }
